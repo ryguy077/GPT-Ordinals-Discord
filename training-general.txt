@@ -1,0 +1,406 @@
+Ordinal Theory allows assigning serial numbers to satoshis (smallest unit of Bitcoin) and tracking them as they are spent in transactions. It is a simple and effective way to create digital artifacts, like NFTs, on the Bitcoin blockchain without requiring a sidechain or separate token.
+
+To work with inscriptions, you need a Bitcoin full node and a wallet that supports sat control. Bitcoin Core and the 'ord' utility can be used for this purpose. Start by installing and configuring Bitcoin Core with a transaction index. Sync the blockchain and create a wallet using 'ord wallet create'. Receive sats to your wallet using 'ord wallet receive'.
+
+Create inscription content and use 'ord wallet inscribe' to inscribe it onto a satoshi. Inscriptions are stored on-chain and can be tracked using Ordinal Explorer. To send inscriptions, generate a new address and use 'ord wallet send'. The recipient can confirm receipt by running 'ord wallet inscriptions'.
+
+Inscriptions offer a decentralized, secure, and permissionless way to create and transfer digital artifacts on the Bitcoin blockchain. They are appealing to collectors, artists, and Bitcoin enthusiasts alike, providing new market opportunities and enhancing Bitcoin's use cases.
+
+brc-20
+Read every word if you decide to test. These will be worthless. Use at your own risk.
+This is just a fun experimental standard demonstrating that you can create off-chain balance states with inscriptions. It by no means should be considered THE standard for fungibility on bitcoin with ordinals, as I believe there are almost certainly better design choices and optimization improvements to be made. Consequently, this is an extremely dynamic experiment, and I strongly discourage any financial decisions to be made on the basis of it's design. I do, however, encourage the bitcoin community to tinker with standard designs and optimizations until a general consensus on best practices is met (or to decide that this is a bad idea altogether!).
+Must read summary of the experiment thus far. by ​
+Would also like to mention that the taproot enabled concept of issuing assets on the bitcoin blockchain is not novel, and Taro is unequivocally a better solution. 
+Idea
+Experiment to see if ordinal theory can facilitate fungibility on bitcoin
+Create a brc-20 with the deploy function
+Mint an amount of brc-20's with the mint function
+Transfer an amount of brc-20's with the transfer function. 
+brc-20 balance state can be found by aggregating all of these function's activity together.
+Deployments initialize the brc-20. Do not affect state
+Mints provide a balance to only the first owner of the mint function inscription
+Transfers deduct from the senders balance and add to the receivers balance, only upon the first transfer of the transfer function. (1. Inscribe transfer function to senders address 2. sender transfer's transfer function)
+Front end
+Dune dashboard was meant for demo purposes only and is already broken/obsolete. Will keep live to demonstrate the logic required to determine state. 
+In the meantime some marketplaces are inscription services are working on a functioning indexer. I will list solutions as they come online
+​ (full balance state and explorer functionality)
+
+​ (no state, search functionality only)
+​ (no state, ordi search functionality only)
+​ (no state, list of coins only)
+How to
+Getting a balance
+You can either deploy your own or mint from existing deployments bitcoin punks style
+(Optional: Only do if you want to create your own brc-20. If not go to step 2) Inscribe the deploy function to you ordinal compatible wallet with the desired brc-20 parameters set.
+Inscribe the mint function to your ordinal compatible wallet. Make sure the ticker matches either a) the brc-20 you deployed in step 1, or b) any brc-20 that has yet to reach its fully diluted supply. Also if the brc-20 has a mint limit, make sure not to surpass this. Careful if using inscription service. Some tools inscribe to themselves first then forward it to the customer (thus the intermediate inscription service owned address keeps the balance)
+Transferring a balance
+Inscribe the transfer function to your ordinal compatible wallet. Make sure the transfer function inscription information is valid before inscribing . Careful if using inscription service. Some tools inscribe to themselves first then forward it to the customer (thus because the intermediate inscription service owned address has no balance and the transfer function is wasted). Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+Once received, (and if valid) send the inscription to the desired destination to transfer the balance. 
+What is valid?
+A valid transfer function is required to transfer a balance. Validity can be determined by the following:
+Valid transfer functions are ones where the amount stated in the inscription does not exceed Available balance when inscribed.
+Available balance defined as: [Overall balance] - [valid/active transfer function inscriptions in wallet (Transferable balance)]. If there are no valid/active transfer functions held by an address Available balance and Overall balance are equivalent.
+Example: A wallet holds an Overall balance of 1000 "ordi", and . The holder then inscribes a transfer function of 700 "ordi". Once the inscription is confirmed, the following is true: Overall balance = 1000, Available balance = 300, Transferable balance = 700. If in the next block, the user tried to inscribe a transfer function of 500 "ordi", this would not be valid as the maximum amount that can be inscribed is 300 (Available balance). 
+If multiple transfer functions are inscribed in the same block, validity is determined by the order the were confirmed in the block. 
+Redundancies
+If a user changes their mind and no longer wishes to transfer their transfer function, and wants to restore their Available balance to the Overall balance (invalidate Transferable balance), the user must simply transfer the transfer function inscription to themselves.
+(LEFT) The transfer of 700 "ordi" from sender to receiver (RIGHT) The restoration of overall balance via a self transfer of 700 "ordi". Only the balances marked in red are represented by inscriptions. 
+Notes
+Do not send inscriptions to non ordinal compatible wallet taproot addresses
+It is unlikely that balances will be safely tradable using existing marketplace infrastructure. Under no circumstances does the transfer of a mint function result in a balance change.
+Each transfer inscription can only be used once
+The first deployment of a ticker is the only one that has claim to the ticker. Tickers are not case sensitive (DOGE = doge). 
+If two events occur in the same block, prioritization is assigned via order they were confirmed in the block. (first to last).
+Minting transfer inscription to yourself first is necessary to avoid others spending your balance
+For public brc-20 mints the bitcoin punks / .sats names 'first is first' approach is adopted
+The mint function and the second step of the transfer function are the only events that cause changes in balances
+The first mint to exceed the maximum supply will receive the fraction that is valid. (ex. 21,000,000 maximum supply, 20,999,242 circulating supply, and 1000 mint inscription = 758 balance state applied)
+Mint function inscriptions do not have a padding requirement
+No valid action can occur via the spending of an ordinal via transaction fee. If it occurs during the inscription process then the resulting inscription is ignored. If it occurs during the second phase of the transfer process, the balance is returned to the senders available balance. 
+Number of decimals cannot exceed 18 (default)
+Standard limited to uint128
+Maximum supply cannot exceed uint64_max
+Operations
+As I mentioned above, this is just my fun experimental standard design. I welcome anyone to improve upon the design, rules, or compression issues it poses. For traceability json {} are required, as well as the minimum required information to satisfy one of the functions.
+Deploy brc-20
+ordi used for demo purposes in the docs. It has already reached its max supply.
+{ 
+  "p": "brc-20",
+  "op": "deploy",
+  "tick": "ordi",
+  "max": "21000000",
+  "lim": "1000"
+}
+Key
+Required?
+Description
+p
+Yes
+Protocol: Helps other systems identify and process brc-20 events
+op
+Yes
+Operation: Type of event (Deploy, Mint, Transfer)
+tick
+Yes
+Ticker: 4 letter identifier of the brc-20
+max
+Yes
+Max supply: set max supply of the brc-20
+lim
+No
+Mint limit: If letting users mint to themsleves, limit per ordinal
+dec
+No
+Decimals: set decimal precision, default to 18
+Mint brc-20
+Careful if using inscription service. Some tools inscribe to themselves first then forward it to the customer (thus the intermediate inscription service owned address keeps the balance)
+{ 
+  "p": "brc-20",
+  "op": "mint",
+  "tick": "ordi",
+  "amt": "1000"
+}
+Key
+Required?
+Description
+p
+Yes
+Protocol: Helps other systems identify and process brc-20 events
+op
+Yes
+Operation: Type of event (Deploy, Mint, Transfer)
+tick
+Yes
+Ticker: 4 letter identifier of the brc-20
+amt
+Yes
+Amount to mint: States the amount of the brc-20 to mint. Has to be less than "lim" above if stated
+Transfer brc-20
+Careful if using inscription service. Some tools inscribe to themselves first then forward it to the customer (thus because the intermediate inscription service owned address has no balance and the transfer function is wasted). Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "100"
+}
+Key
+Required?
+Description
+p
+Yes
+Protocol: Helps other systems identify and process brc-20 events
+op
+Yes
+Operation: Type of event (Deploy, Mint, Transfer)
+tick
+Yes
+Ticker: 4 letter identifier of the brc-20
+amt
+Yes
+Amount to transfer: States the amount of the brc-20 to transfer.
+to
+No
+Address to send to: States the receiving address. If left blank logic will presume that the receiver of the transfer is correct.
+fee
+No
+Transfer fee: For tracking without taproot data purposes only
+***fee and to keys were for demo indexing purposes only. Inclusions have no effect on the function nor do they invalidate it. 
+
+
+examples
+Please understand that this is an experimental standard, and know how it works before testing. Use at your own risk. Examples of balance changing events. Wallets tested with: Xverse.
+Regular Examples
+Mint 1 "ordi" to yourself
+ordi has already reached its maximum supply, example for demonstration purposes only.
+Minter populates mint function with required information
+{ 
+  "p": "brc-20",
+  "op": "mint",
+  "tick": "ordi",
+  "amt": "1"
+}
+Inscribe the function to your own ordinal enabled wallet taproot address. Make sure not using inscription service that mints to itself first. 
+You now have 1 "ordi"
+User
+Balance at start
+Balance at end
+Minter
+0
+1
+Transfer 500 "ordi" to Satoshi's wallet
+Satoshi wallet just an example. Can send to any ordinal compatible taproot address. 
+Populate transfer function with required information
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "500"
+}
+Inscribe the function to your own ordinal enabled wallets taproot address that holds the balance. Make sure not using inscription service that mints to itself first. Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+Send the inscription from your wallet to Satoshi's ordinal enabled wallets taproot address (if he had one). 
+Satoshi now has 500 "ordi"
+User
+Balance at start
+Balance at end
+Sender
+500
+0
+Satoshi
+0
+500
+VERY EXPERIMENTAL EXAMPLES, USE AT YOUR OWN RISK
+Only included because people were getting scammed. Remember, these are worthless!
+Trade 250 "ordi" for 1 sat via escrow
+Do not recommend trading until trusted balance state index tool is available. As it stands there is no easy way of accurately checking if the seller has a valid balance. Escrow trust/error risks should also be considered. 
+Seller populate transfer function with required information
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "250"
+}
+Seller inscribes the function to their own ordinal enabled wallet taproot address that holds the balance. Make sure not using inscription service that mints to itself first. Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+Seller send's the inscription from their wallet to the escrows taproot address. 
+Escrow checks balance state index tool to check their wallet has a valid balance 
+Buyer sends 1 sat to escrows bitcoin address
+Escrow now has 1 sat and 250 "ordi"
+Escrow populate transfer function with required information
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "250"
+}
+Escrow inscribes the function to their own ordinal enabled wallet taproot address that holds the balance. Make sure not using inscription service that mints to itself first. Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+Escrow send's the inscription from their wallet to the buyers taproot address. 
+Escrow sends 1 sat to sellers bitcoin address
+Seller now has 1 sat
+Buyer now has 250 "ordi"
+User
+Balance at start
+Balance at end
+Seller
+250
+0
+Buyer
+0
+250
+Trade 250 "ordi" for 1 wei via emblem vault
+Do not recommend trading until trusted balance state index tool is available. As it stands there is no easy way of accurately checking if the emblem vault has a valid balance. 
+Seller populate transfer function with required information
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "250"
+}
+Seller inscribes the function to their own ordinal enabled wallet taproot address that holds the balance. Make sure not using inscription service that mints to itself first. Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+Seller creates emblem vault and populates title / description with transfer function details
+Seller mints the emblem vault
+Seller send's the inscription from their wallet to the emblem vaults taproot address. 
+Emblem vault now has 250 "ordi"
+Seller lists emblem vault for 1 wei
+Buyer checks balance state index tool to check if emblem vault has valid balance 
+Buyer buys emblem vault for 1 wei
+Seller now has 1 wei
+Buyer now has control of emblem vault. If buyer wants to move balance from emblem vault, buyer unlocks vault.
+Buyer imports private keys to an ordinal compatible wallet
+Buyer populates transfer function with required information
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "250"
+}
+Buyer inscribes the function to the imported ordinal enabled wallet taproot address that holds the balance. Make sure not using inscription service that mints to itself first. Some ordinal wallets generate a different address each time, make sure to send to the address that holds the balance. 
+Buyer send's the inscription from their wallet to the desired destinations taproot address. 
+Desired destination now has 250 "ordi"
+User
+Balance at start
+Balance at end
+Seller
+250
+0
+Buyer
+0
+250
+
+1/ WTF is BRC-20
+
+Read on to learn about Bitcoin's new fungible token standard 🧵
+Image
+2/ On January 20th, 2023 @rodarmor released the Ordinals Protocol to the world. He had found a way to index every single sat (the smallest denomination of a Bitcoin) and track it throughout the Bitcoin network.
+Unroll available on Thread Reader
+
+3/ The Ordinals Protocol allows you to inscribe any type of file on-chain on Bitcoin. That inscription points to a sat which tracks its ownership so what you end up with is a fully on-chain Bitcoin NFT. 
+4/ On March 8th, 2023 @domodata tweeted a thread theorizing a way to create a fungible token standard on top of the Ordinals protocol called BRC-20.
+Unroll available on Thread Reader
+
+5/ It states that anybody can inscribe JSON onto Bitcoin via the Ordinals Protocol to "Deploy" a BRC-20 token like this:
+Image
+6/ Then anybody can mint it for free. All BRC-20 tokens are free mints with no pre-mine. In this example token the "lim" (limit) was set to 1,000 and the "max" (max supply) was set to 21,000,000. So anybody can inscribe a mint JSON which works until 21,000,000 tokens are minted.
+Image
+7/ Once the token mints out you can begin transfering your tokens. You do this by inscribing a transfer JSON of however many tokens you want. Your inscription NFT will then show up in your wallet and when you send it to another address, that address will recieve the tokens.
+Image
+8/ If you didn't understand any of that no worries. All of that stuff is going to get abstracted away by UIs shortly anyways. The key takeaway is that Bitcoin now has a fungible token standard that lets anyone deploy a unique ticker like $TEST which will start a free mint. 
+9/ The last thing to understand about both ordinals and BRC-20 is that the indexers assign every inscription or BRC-20 token a unique number based on the order of its creation. So the first BRC-20 token is 1, the second one is 2, etc. The market seems to value this order a lot. 
+10/ With NFTs and memecoins it certainly seems like Web3 has arrived on Bitcoin. If this is indeed the case then we have a lot of catch up to do. The bull case is that if a mature Web3 chain has a 1:1 ratio of fungible tokens to the native currency (like on ETH) then buckle up
+
+WTF is BRC20 and why do I have a headache?
+BRC20 are token balances inscribed onto Bitcoin through the Taproot Network.
+​
+You have a head ache cause you're early and the tools to navigate are still in development!
+​
+Here's a brief overview of BRC20:
+Tickers, what are these?
+Tickers are the name of the token, like $PEPE or $XING, they can be deployed by anyone at any time BUT tickers can not be duplicated, for example there can only be one 'ordi' or 'meme'.
+Each ticker must be 4 bytes long and is limited to such. (1 letter = 1 byte)
+But I've seen some 2 letter tickers, how? Unisat code can create invisible bytes to fill the length
+Deploy
+Deploy inscriptions are sent to deploy the BRC20 token, of course the ticker cannot be duplicated so if a second inscription is sent with the same ticker, it is void and will not be logged.
+Within the Deploy inscription the following information is logged:
+Ticker name (not case sensitive)
+Total Supply
+Mint limit (the total a user can mint in a single transaction)
+Decimal
+Mint
+Mint inscriptions are sent to mint the supply of the ticker that has been deployed. If the mint limit is 100, this is the maximum you can submit in the transaction or the Ordinal will be void from the deployed BRC20 supply count.
+Within the mint inscription the following information is logged:
+Ticker name
+Total mint amount
+Transfering your balance
+The balance of the BRC20 tokens you have minted or purchased will be logged to your wallet address NOT the inscription. To transfer your balance you will need to inscribe a 'Transfer' with the amount of balance you wish to transfer/sell. This must be inscribed directly to the wallet holding the balance.
+Each transfer inscription can only be used to transfer the balances once, the receiver will now have a new balance added to their wallet and must repeat the process if they choose to list/sell their balance.
+Within the transfer inscription the following information is logged:
+Ticker name
+Transfer
+Amount
+Confused yet? Great, let's head into the more technical side of actually navigating!
+
+BTW, If you find value in any of this, I will accept donations in Ordinals, BRC20s or Bitcoin!
+
+Gib Wallet
+Xverse, Hiro, Unisat? Which wallet will do me well ser?
+​
+To me, Xverse has been my go to since I entered Ordinals in feb, the UX is smooth and is easy to navigate. The problem was when BRC20 arose but I couldnt access the marketplace without their own wallet, Unisat. I stalled on downloading and earning the points as all my transactions were through Xverse, likely enough tx for an OG pass :cry:
+​
+So, the wallet for navigating BRC20 at this time is Unisat. They have built everything you need in one place, so I would advise downloading and sending 20 transactions on minting BRC20 tokens! 
+​
+I need 20 points to access the marketplace, what do I do? 
+Mint some BRC20 tokens!! Choose a ticker in from 'in-progress' here:  
+I have deployed GEN0-9 BRC20 tickers, you can mint a GEN(X) token here, 1 mint = 1 unisat point: ​
+​
+Set up Unisat
+Download your wallet ​
+Set up and SAVE YOUR SEED PHRASE ON PAPER DO NOT SHARE THIS WITH A SINGLE SOL, ZIP LOCK IN FIRE AND WATER PROOF BAG, MEMORIES, DO WHAT YOU GOTTA DO!!
+Select 'Taproot' in address type
+Deposit some Bitcoin!
+Congrats, you now have a wallet and a GEN3 BRC20 token! Now let's Deploy some cool tickers
+​
+If you sent 20 transactions, you can now access the Unisat marketplace. Don't be a degen, or do it's up to you! I own ordi, meme xing and a ton of Deploys. I'm not an alpha caller, counter trade me where possible.
+
+How to Deploy
+Ready to deploy a ticker? Dope, let's dive in!!
+Firstly, you will need to check if the ticker you desire is available. Bear in mind that there are limited combinations so you'll have to think outside the box!
+Use  to search for your ticker, once you've found one that is not already deployed (shows 0 in the search) you can begin the process of deploying your first BRC20 token!
+How to Deploy, for dummies!
+Load , click 'brc-20' and select 'Deploy'
+Insert your unique ticker, remember it must be 4 bytes long (4 letters/symbol/numbers)
+Choose your supply
+Choose your Limit per mint
+Click 'Next'
+Keep in mind that 1 limit mint on a 21m supply would take 21m transactions (AND FEES) to mint out! As a default most coins have been 21m with 1000 mint limit.
+Another option is to set the limit mint to the same as supply, this gives the option to distribute the tokens any way you desire later (less of a fair mint but more freedom).
+Double and triple check your token ticker, supply and limit mint
+Click next
+Paste your receiver wallet to receive the deploy ordinal (make sure its your wallet, there is a 0.2% royalty on unisat sales!)
+Double check all the info on this panel, select Normal if you like risk or select Custom add 25% more 'sats/vbyte' to ensure the BRC20 deploys rapidly
+Click 'Submit & Pay Invoice
+​
+The final hurdle! Copy the BTC address & note the amount to send
+Head to your prefered wallet, paste the wallet and enter the EXACT amount shown on the bill
+Submit Transaction
+THE END! Your BRC20 Deploy is now complete (once transaction confirms)
+Wasn't so hard was it? Right let's get to the How to Mint section!
+
+How to Mint
+Seen a token you want to mint? Let's degen.
+You've seen a hype new mint or maybe you just want to mint some tokens from a lowkey BRC20 ticker and ready to grab a piece of the pie?? Let's get into how to... for dummies!
+How to mint, for dummies!
+Firstly, you need to load up the BRC20 you want to mint on , once you've searched and found it, click the token
+Once the token page has loaded, you will see a button on the top right which says 'Mint Directly'... Click it
+​
+The next step is simple, DO NOT CHANGE AMOUNT!
+If you wish to mint more than the limit, you must move the curser on 'Repeat Mint', bear in mind that each will be a new inscription and transaction fee
+Click Next
+​
+Paste your receiver wallet, this MUST be a Taproot Ordinals wallet (usually bc1p), ensure this is correct as you will lose the balance if it isn't
+Choose your fee, Normal will confirm the transaction but if the supply is over 50% minted, I would advise hitting custom and adding 25% higher sats v/byte (at least)
+Click Submit & Pay Invoice
+Copy the wallet address and note the Total amount to send
+Open your prefered wallet and send the EXACT Total Amount to the address shown
+That's it, you just minted your first BRC20 tokens!! It will take some time for the transaction to confirm, once it has your balance will show in https://unisat.io/brc20 once you paste the receiver wallet into it and the transaction is confirmed.
+​
+Now that was fun right?! Well, now to move the balance around or sell it you must inscribe a transfer!
+
+How to Transfer
+Bitcoin is built to give you headaches but learning how to navigate will increase your IQ.
+Soooo you thought that Deploying and Minting BRC20s was fun?? Wait till you have to transfer them! Never fear, we wrote it for dummies so even you can understand.
+How to transfer your balance, for dummies!
+First up, paste the wallet that holds the mint or purchased inscription of your BRC20 tokens here https://unisat.io/brc20, this will show the balance that is assigned to your wallet
+To move or list the tokens, you will need to inscribe a 'Transfer, doing so will make your Balance into a transferrable balance
+This bit is pretty important, you will need to copy this string of code and edit the fields to the tokens you want to transfer and how many:
+
+{ "p": "brc-20", "op": "transfer", "tick": "$ZSY", "amt": "69" }
+Ensure that the ticker is correct to your balance and the amount doesnt exceed your balance in the wallet you intend to transfer from!
+Next, you paste this string of code into the 'text' section of ​
+Double check the string is correct and click next
+Paste the receive wallet that you intend to trransfer the balance from, this MUST be the wallet that holds the balance which you previously searched in ​
+Select the fee, you can select 'Normal' but for a faster transaction add 25% ontop of the Normal fee in the custom section.
+Once the transaction confirms and the Transfer ordinal reaches your wallet, your balance will update to being 'transferable'
+​
+You can now send this Transfer Ordinal to any other taproot wallet or list on a marketplace. 
+Well done!! You have just Deployed, Minted and Transfered your first BRC20 tokens!! Wasn't that hard was it? 
+Well guess what? The Transfer Ordinal can only be used to transfer the balance once, once the Transfer Ordinal hits a new wallet, you will have to repeat the above process to transfer the balance again!! 
+That's all for now, will be updating this Gitbook document with more soon including: 1/1 supply BRC20s, unisat code Tickers and other random BRC20 shit!
+​

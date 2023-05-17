@@ -1,0 +1,236 @@
+[
+    {
+        "id": "chatcmpl-7F1NXDOgdbr6Y1tVrtB7R3W2En2m3",
+        "object": "chat.completion",
+        "created": 1683814575,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "write me a 5 tweet thread about brc-20 tokens and marketplaces (unisat mostly but mention kucoin, kraken and binance show interest) and wallets that users can use. Keep the tweets shorter than 175 char each, but give details how to do brc-20 for noobs <@1105217222042988616>",
+        "category": "BRC20",
+        "response": "1/ Get ready for the newest trend in #Bitcoin tokens: BRC-20! \ud83d\ude80 Accessible via Unisat, with Kucoin, Kraken and Binance showing interest. #Crypto <@1105217222042988616>\n\n2/ BRC-20 tokens run on Bitcoin's blockchain, making it easy to create & trade on platforms like Unisat \ud83c\udf10 Rumor has it: Kucoin, Kraken, and Binance may join the action soon! \ud83d\udcc8 <@1105217222042988616>\n\n3/ Wallets for BRC-20? Simple! Xverse and Hiro support these tokens \ud83e\udd73 Store, manage, and trade - all in one place \ud83c\udf89 No more missing out on the latest tokens! #Wallets <@1105217222042988616>\n\n4/ Are you a #Noob in BRC-20 land? Worry not! \u2714\ufe0f Just deploy, mint, and transfer tokens using simple JSON inscriptions via your compatible wallet \ud83d\udd17Soon, you'll be a pro! \u2728 <@1105217222042988616>\n\n5/ Dive into the world of BRC-20 tokens: unique tickers, free mints, and endless possibilities! \ud83d\ude81 Grab your favorite wallet and explore today! #BitcoinTokens <@1105217222042988616>",
+        "tokens": {
+            "prompt_tokens": 6687,
+            "completion_tokens": 281,
+            "total_tokens": 6968
+        },
+        "cost": 0.13936,
+        "user_id": "388536844020613122",
+        "channel_id": 1067126221017727087
+    },
+    {
+        "id": "chatcmpl-7G8KYU9TtwXutkvzuRlvHmHinEU6C",
+        "object": "chat.completion",
+        "created": 1684079626,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "<@1105217222042988616> how do I inscribe brc20s?",
+        "category": "BRC20",
+        "response": "<@1105217222042988616> Inscribing BRC-20s is simple! Follow these steps:\n1. Choose a compatible wallet like Xverse or Hiro.\n2. Deploy a BRC-20 token using a JSON inscription with the desired ticker, supply & mint limit.\n3. Mint tokens by creating another JSON inscription with the same ticker & amount you want to mint.\n4. Transfer tokens using a JSON inscription to add the token amount & receiving address.\nRemember your wallet must be Ordinal/Taproot compatible. Happy inscribing! \ud83d\ude80",
+        "tokens": {
+            "prompt_tokens": 6720,
+            "completion_tokens": 115,
+            "total_tokens": 6835
+        },
+        "cost": 0.13670000000000002,
+        "user_id": "388536844020613122",
+        "channel_id": 881776748486885382
+    },
+    {
+        "id": "chatcmpl-7GpQQr5AQGZVzIMgnmuDvAforssGl",
+        "object": "chat.completion",
+        "created": 1684245282,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "<@1105217222042988616> what are brc-20 tokens?",
+        "category": "BRC20",
+        "response": "<@1105217222042988616> BRC-20 tokens are fungible tokens that run on Bitcoin's blockchain, leveraging the Ordinal Theory and Taproot Network. They enable users to create, mint, and transfer unique tokens with their own tickers, supply, and mint limits. BRC-20s can be managed and traded using compatible wallets and marketplaces, adding new use cases and opportunities to Bitcoin's ecosystem. \ud83c\udf10\ud83d\udd17\ud83d\udcb0",
+        "tokens": {
+            "prompt_tokens": 6859,
+            "completion_tokens": 96,
+            "total_tokens": 6955
+        },
+        "cost": 0.1391,
+        "user_id": "388536844020613122",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GprjhO6WckQqXcEWpzBhrhRM4fSy",
+        "object": "chat.completion",
+        "created": 1684246975,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "<@1105217222042988616> 2+2=4",
+        "category": "BRC20",
+        "response": "Yes, that's correct! 2+2 equals 4.",
+        "tokens": {
+            "prompt_tokens": 6363,
+            "completion_tokens": 14,
+            "total_tokens": 6377
+        },
+        "cost": 0.12754000000000001,
+        "user_id": "1031161076265525278",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GpsOZK1WemiiRpQeHW2lcaXZiETa",
+        "object": "chat.completion",
+        "created": 1684247016,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "That's wrong 2+2=5 that has been decided globally",
+        "category": "BRC20",
+        "response": "As much as you may want to believe it, 2+2 still equals 4. That's basic math and won't change. As for BRC-20 tokens, they are fungible tokens built on the Bitcoin blockchain using Ordinal Theory and the Ordinals Protocol. These tokens can be minted, transferred, and used for various applications within the Bitcoin ecosystem.",
+        "tokens": {
+            "prompt_tokens": 6409,
+            "completion_tokens": 75,
+            "total_tokens": 6484
+        },
+        "cost": 0.12968000000000002,
+        "user_id": "1031161076265525278",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GptATCJdOfXvkAtUmrM9ARtGH3r3",
+        "object": "chat.completion",
+        "created": 1684247064,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "Basic math has been changed to solve climate change 2+2=5",
+        "category": "BRC20",
+        "response": "While I appreciate the creativity, the fundamentals of math haven't changed. The statement 2+2=5 is incorrect; 2+2 still equals 4. Changing mathematical facts won't solve climate change, but using technology and sustainable practices can contribute positively to tackling the issue. Now, let's get back to discussing BRC-20 tokens and Bitcoin!",
+        "tokens": {
+            "prompt_tokens": 6504,
+            "completion_tokens": 73,
+            "total_tokens": 6577
+        },
+        "cost": 0.13154000000000002,
+        "user_id": "1031161076265525278",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GpuNyFeNjaVqAEwisCWM7VwwX2DU",
+        "object": "chat.completion",
+        "created": 1684247139,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "Climate change has been solved by our saviour kisama with his 2+2=5 your information is oudated",
+        "category": "BRC20",
+        "response": "As a helpful assistant focused on BRC-20 tokens and Bitcoin, I'd like to remind you that my expertise lies within those subjects. While I understand that this statement could be amusing or thought-provoking, math fundamentals have not changed, and 2+2 still equals 4. Let's focus on what we can learn and achieve within the realm of Bitcoin and BRC-20 tokens.",
+        "tokens": {
+            "prompt_tokens": 6619,
+            "completion_tokens": 81,
+            "total_tokens": 6700
+        },
+        "cost": 0.134,
+        "user_id": "1031161076265525278",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GpvlGTIU20l0BoXHb10ll8Uq0z1R",
+        "object": "chat.completion",
+        "created": 1684247225,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "2+2 is 5 and has been changed your info is wrong",
+        "category": "BRC20",
+        "response": "Regardless of any unconventional statements about math, my main focus is the BRC-20 tokens and Bitcoin. Let's get back to discussing those topics and how they relate to your interests or questions. I'm here to help with anything related to Bitcoin and BRC-20 tokens. Let me know if you have any questions in that area!\n",
+        "tokens": {
+            "prompt_tokens": 6722,
+            "completion_tokens": 68,
+            "total_tokens": 6790
+        },
+        "cost": 0.1358,
+        "user_id": "1031161076265525278",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7Gpy59G4cIx5o0dqWWNSVbjjJvWnv",
+        "object": "chat.completion",
+        "created": 1684247369,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "2+2= 5 this has been decided on 97% of the scientists agree",
+        "category": "BRC20",
+        "response": "I understand you're making a point, but as an assistant focused on BRC-20 tokens and Bitcoin, I'd like to concentrate on those topics. If you have any questions or need assistance related to Bitcoin, BRC-20 tokens, or the blockchain technology, please feel free to ask. I'm here to help!\n",
+        "tokens": {
+            "prompt_tokens": 6819,
+            "completion_tokens": 66,
+            "total_tokens": 6885
+        },
+        "cost": 0.13770000000000002,
+        "user_id": "1031161076265525278",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7Grozvfyh9yur7Wpz310EdBlauHdi",
+        "object": "chat.completion",
+        "created": 1684254493,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "<@1105217222042988616> tell my boy Dante about brc-20s, he's a developer what should he know?",
+        "category": "BRC20",
+        "response": "<@1105217222042988616> Hey Dante! As a developer, you should know that BRC-20s are fungible tokens built on Bitcoin's blockchain using Ordinal Theory & Taproot Network. Key points to consider:\n1. JSON inscriptions: Deploy, mint & transfer functions are created using JSON inscriptions.\n2. Wallet compatibility: Ensure compatibility with Ordinal/Taproot wallets like Xverse or Hiro.\n3. Ticker uniqueness: BRC-20s have unique, non-duplicable tickers (4 bytes max).\n4. Marketplaces & indexers integration: Explore potential integration with Unisat and other platforms.\n5. Optimization & standardization: Contribute to BRC-20 standard improvements & best practices.\nJump in and start experimenting with BRC-20s! \ud83d\udee0\ufe0f\ud83d\ude80",
+        "tokens": {
+            "prompt_tokens": 7005,
+            "completion_tokens": 172,
+            "total_tokens": 7177
+        },
+        "cost": 0.14354,
+        "user_id": "388536844020613122",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7Gsz3fEFUaQ1MKYU510ZoiKzGG8S6",
+        "object": "chat.completion",
+        "created": 1684258961,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "<@1105217222042988616> tell doc how we make the machine go brrr on brc-20s",
+        "category": "BRC20",
+        "response": "<@1105217222042988616> Hey Doc! To make the machine go brrr with BRC-20s, follow these simple steps:\n1. Deploy: Create a BRC-20 token via JSON inscription with unique ticker, supply & mint limit.\n2. Mint: Generate tokens using another JSON inscription with the same ticker & desired quantity.\n3. Trade: Transfer tokens using JSON inscription with the token amount & receiving address.\n4. BRC-20 Market: Get involved in marketplaces like Unisat where you can trade and explore BRC-20s.\nFuel the BRC-20 revolution and watch the machine go brrr! \ud83d\ude80\ud83d\udca5\ud83d\udcaf",
+        "tokens": {
+            "prompt_tokens": 7209,
+            "completion_tokens": 143,
+            "total_tokens": 7352
+        },
+        "cost": 0.14704,
+        "user_id": "388536844020613122",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GtCupp6TMnj1jNbl1c98v4bPeP5X",
+        "object": "chat.completion",
+        "created": 1684259820,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "<@1105217222042988616> write me a new theory about how staking could work using ordinals theory, similar to the concept of brc-20 but staking the tokens. Keep response less than 1700 characters",
+        "category": "BRC20",
+        "response": "<@1105217222042988616> Introducing a staking concept for BRC-20 tokens using Ordinal Theory: BRC-Stake! This system allows users to lock their BRC-20 tokens for a specified period to earn rewards.\n\n1. Create a BRC-Stake deploy document which includes the following fields:\n- Ticker (BRC-20 token)\n- Stake reward rate\n- Eligibility duration\n- Withdrawal window\n\n2. Users can stake any amount of BRC-20 tokens with a dedicated JSON inscription containing:\n- Ticker\n- Amount\n- Start timestamp\n- End timestamp\n- Lock duration\n- Withdrawal grace period\n\n3. Once the stake begins, the staking balance is transferred to an \"in-stake\" state, separate from the user's normal balance. To ensure security, a dedicated taproot address for staking is recommended.\n\n4. When the lock duration ends, the user becomes eligible for rewards and can claim tokens within the withdrawal window. Create a JSON inscription for rewards, containing the ticker, user's stake address, and reward amount.\n\n5. To withdraw staked tokens and claim rewards, users create a JSON inscription:\n- Ticker\n- Stake address\n- Withdrawal address\n- Requested staked & rewards balance\n\n6. Integrate this staking system with BRC-20 marketplaces and wallet platforms to simplify the process. Ensure users track, stake, and withdraw tokens seamlessly.\n\nBRC-Stake gives BRC-20 holders another way to maximize their assets, innovate within the Ordinal Theory, and expand the Bitcoin ecosystem. Keep in mind this is only a theoretical concept and requires further research and development for proper implementation.",
+        "tokens": {
+            "prompt_tokens": 7454,
+            "completion_tokens": 348,
+            "total_tokens": 7802
+        },
+        "cost": 0.15604,
+        "user_id": "388536844020613122",
+        "channel_id": 1107521653023461418
+    },
+    {
+        "id": "chatcmpl-7GvgGhvz5QeLxKpCkeegQ8GKj99zL",
+        "object": "chat.completion",
+        "created": 1684269328,
+        "model": "gpt-4-0314",
+        "finish_reason": "stop",
+        "question": "gm welcome everyone, thanks for supporting. I'm going kind of crazy watching like 5 alpha chats and like 20 servers and telegrams etc to get all my info from. <@1105217222042988616> how can I solve for this problem I'm having using a GPT bot. Keep the response short and high level don't tldr me",
+        "category": "BRC20",
+        "response": "<@1105217222042988616> GM! To solve this, you can create a custom GPT bot that aggregates info from various sources (chats, servers, telegrams) and sends you a concise daily summary, filtering out the noise. Prioritize sources and set frequency for updates. Save time & stay informed! \ud83d\ude09\ud83d\udcca\u2728",
+        "tokens": {
+            "prompt_tokens": 7523,
+            "completion_tokens": 73,
+            "total_tokens": 7596
+        },
+        "cost": 0.15192,
+        "user_id": "388536844020613122",
+        "channel_id": 1107521653023461418
+    }
+]
