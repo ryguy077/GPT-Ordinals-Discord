@@ -1,54 +1,57 @@
+# Discord Bot for Bitcoin BRC-20 NFT Project
 
-#GPT-4 Based Discord Bot
-This codebase comprises of a custom Discord bot that utilizes OpenAI's GPT-4 model to interact with users. The bot identifies the category of a user's message, and based on the category, it responds appropriately. It has a system of user credits, maintains a conversation history, and can handle API errors.
+This is a custom Discord bot that utilizes OpenAI's GPT-4 API to answer user questions about the BRC-20 NFT project running on the native Bitcoin blockchain. The bot is designed to be bold, confident, and provide concise responses related to the project, as well as display a particular dislike for non-Bitcoin blockchains such as Solana.
 
-Installation
-Before you begin, make sure you have Python 3.7 or above installed.
+## Features
 
-Clone this repository.
+- Category determination for user messages
+- Custom conversation history and user credits system
+- Short and informative responses from the AI
+- Logging of API errors
+- Easy setup with environment variables
 
-Install the required Python packages by running:
+## Installation
 
-sh
-Copy code
-pip install -r requirements.txt
-This command installs the following packages:
+1. Clone the repository or download the source code.
 
-discord
-openai
-python-dotenv
-asyncio
-Create a .env file in the root directory of the project, and add the following environment variables:
+2. Install the required dependencies:
 
-sh
-Copy code
-DISCORD_TOKEN=<Your Discord Bot Token>
-OPEN_API_KEY=<Your OpenAI API Key>
-Create a training-general.txt file and a training-AboutUs.txt file in the root directory of the project. These files should contain the training texts for the bot.
+```
+pip install discord.py openai python-dotenv
+```
 
-Create an empty history.json file and credits.json file in the root directory of the project.
+3. Create a `.env` file in the project directory and set the required environment variables:
 
-Usage
-Run the bot using the following command:
+```
+DISCORD_TOKEN=<YOUR_DISCORD_BOT_TOKEN>
+OPEN_API_KEY=<YOUR_OPENAI_API_KEY>
+```
 
-sh
-Copy code
+4. Run the bot:
+
+```
 python bot.py
-The bot will now be active on your Discord server.
+```
 
-Features
-The bot uses OpenAI's GPT-4 model to interpret and respond to user messages.
-It maintains a history of user conversations and uses it to provide context-aware responses.
-It handles OpenAI API errors gracefully by retrying API calls and logging errors.
-It maintains a credit system for users and updates the remaining credits after each interaction.
-It also logs the cost of each conversation in terms of tokens used in the GPT-4 model.
-The bot's responses are based on predefined categories of the user's messages.
-Notes
-The bot only responds to messages where it is mentioned.
-The bot is designed to be a bit cocky and confident, often replying in short messages and making snarky comments about non-bitcoin blockchains.
-The bot operates within a maximum character limit for its responses unless asked to provide more details.
-The api_call_with_retry function is set to retry a maximum of 12 times with a delay of 5 seconds between retries. You can adjust these parameters as needed.
-The bot can manage user credits. Every user starts with 5 credits, and each interaction costs 1 credit. Users can earn more credits (shown in the code where user "388536844020613122" gets 420000 credits).
-The bot uses a predefined cost per token for calculating the cost of a conversation.
-Disclaimer
-This bot interacts with users based on the training it has received. While it has been designed to behave in a certain way, the nature of AI means that its responses may not always be predictable. Please use this bot responsibly and monitor its interactions to ensure they are in line with your community's guidelines.
+## Usage
+
+To communicate with the bot, simply mention it in a message on the Discord server:
+
+```
+@Bot What is the BRC-20 standard?
+```
+
+The bot will then respond with a short and informative answer.
+
+## Files
+
+- `bot.py`: The main bot script that connects to Discord and handles user messages with GPT-4 API calls.
+- `history.json`: Stores the conversation history for each user on the server.
+- `credits.json`: Stores the number of remaining credits for each user on the server.
+- `logs.txt`: Logs any API errors encountered during execution.
+- `.env`: Contains the environment variables needed for the bot to run (Discord token and OpenAI API key).
+- `training-*.txt`: Training text files used by the bot to answer user questions related to specific categories.
+
+## Support
+
+If you encounter any issues or have questions, please open an issue on GitHub.
